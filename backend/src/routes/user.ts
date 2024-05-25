@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign } from 'hono/jwt'
 import { setCookie } from 'hono/cookie'
+import {signinInput, signupInput} from '@gopi_0104/medium-common/dist'
 
 
 
@@ -17,14 +18,25 @@ export const userRouter
     }
   
   }>()
+
 userRouter.post('/signup', async(c) => {
+  
+  const body = await c.req.json()
+
+  const {success} = signupInput.safeParse(body)
+
+  if(!success){
+    c.status(411)
+    return c.json({
+      error: "Invalid Input"
+    })
+  }
+
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate())
 
-  const body = await c.req.json()
-
-  const {name, email, password} = body  
+  const {name, email, password} = body
   
 
   try{
@@ -57,6 +69,18 @@ userRouter.post('/signup', async(c) => {
 
 userRouter
 .post('/signin', async(c) => {
+
+  const body = await c.req.json()
+
+  const {success} = signinInput.safeParse(body)
+
+  if(!success){
+    c.status(411)
+    return c.json({
+      error: "Invalid login credentials"
+    })
+  }
+
   const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL	,
     }).$extends(withAccelerate());
