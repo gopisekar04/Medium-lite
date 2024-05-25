@@ -1,8 +1,8 @@
 import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { sign, verify } from 'hono/jwt'
-import { getCookie, setCookie } from 'hono/cookie'
+import { sign } from 'hono/jwt'
+import { setCookie } from 'hono/cookie'
 
 
 
@@ -17,10 +17,7 @@ export const userRouter
     }
   
   }>()
-
-
 userRouter.post('/signup', async(c) => {
-
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate())
