@@ -105,7 +105,7 @@ userRouter
     const jwt = await sign({user: user.id}, c.env.JWT_SECRET)
     setCookie(c, "jwt", jwt)
     return c.json({
-      jwt
+      jwt 
     })
 
   }catch{
