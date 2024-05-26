@@ -4,12 +4,12 @@ exports.updateBlogInput = exports.createBlogInput = exports.signinInput = export
 const zod_1 = require("zod");
 exports.signupInput = zod_1.z.object({
     email: zod_1.z.string().email(),
-    passwrod: zod_1.z.string().min(6),
+    password: zod_1.z.string().min(6),
     name: zod_1.z.string()
 });
 exports.signinInput = zod_1.z.object({
     email: zod_1.z.string().email(),
-    passwrod: zod_1.z.string().min(6),
+    password: zod_1.z.string().min(6),
 });
 exports.createBlogInput = zod_1.z.object({
     title: zod_1.z.string(),
