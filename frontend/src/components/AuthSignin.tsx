@@ -7,15 +7,14 @@ import { BACKEND_URL } from "../config";
 export default function AuthSignup() {
   const navigate = useNavigate();
   const [postInput, setPostInput] = useState<SigninInput>({
-    passwrod: "",
+    password: "",
     email: "",
   });
 
   const sendRequest = async () => {
     try {
       const res = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, {
-        password: postInput.passwrod,
-        email: postInput.email,
+        postInput,
       });
 
       const { jwt } = res.data;
@@ -60,10 +59,10 @@ export default function AuthSignup() {
             onChange={(e) => {
               setPostInput({
                 ...postInput,
-                passwrod: e.target.value,
+                password: e.target.value,
               });
             }}
-            value={postInput.passwrod}
+            value={postInput.password}
             type="password"
           />
           <div className="flex justify-center ">
