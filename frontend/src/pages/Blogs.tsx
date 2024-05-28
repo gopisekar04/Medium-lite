@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { BACKEND_URL } from "../config";
 import useBlogs, { fetchStatusCode } from "../hooks/useBlogs";
 import { useEffect } from "react";
+import MyLoader from "../components/MyLoader";
 
 export default function Blogs() {
   const navigate = useNavigate();
@@ -33,7 +34,15 @@ export default function Blogs() {
             ))
           : ""}
 
-        {fetchStatus === fetchStatusCode.loading ? <div>loading...</div> : null}
+        {fetchStatus === fetchStatusCode.loading ? (
+          <>
+            <MyLoader />
+            <MyLoader />
+            <MyLoader />
+            <MyLoader />
+            <MyLoader />
+          </>
+        ) : null}
       </div>
     </div>
   );

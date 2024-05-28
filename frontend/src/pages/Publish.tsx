@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { useState } from "react";
 import { CreateBlogInput } from "@gopi_0104/medium-common/dist";
 import { useNavigate } from "react-router-dom";
-const BACKEND_URL = process.env.BACKEND_URL;
+import { BACKEND_URL } from "../config";
 
 export default function Publish() {
   const navigate = useNavigate();
