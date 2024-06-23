@@ -72,7 +72,13 @@ userRouter
 
   const body = await c.req.json()
 
+  console.log(body);
+  
+
   const {success} = signinInput.safeParse(body)
+
+  console.log(success);
+  
 
   if(!success){
     c.status(411)
@@ -86,7 +92,7 @@ userRouter
     }).$extends(withAccelerate());
     
   try {    
-    const body = await c.req.json()
+    // const body = await c.req.json()
     const{ email, password } = body
 
     const user = await prisma.user.findUnique({
