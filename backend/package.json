@@ -4,9 +4,11 @@
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
-    "@gopi_0104/medium-common": "^1.0.3",
+    "@gopi_0104/medium-common": "^1.0.4",
     "@prisma/client": "^5.14.0",
     "@prisma/extension-accelerate": "^1.0.0",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
     "hono": "^4.3.7",
     "prisma": "^5.14.0"
   },

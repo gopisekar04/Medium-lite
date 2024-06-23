@@ -2,8 +2,8 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign } from 'hono/jwt'
-import { setCookie } from 'hono/cookie'
 import {signinInput, signupInput} from '@gopi_0104/medium-common/dist'
+import bcrypt from 'bcrypt'
 
 
 
@@ -38,13 +38,16 @@ userRouter.post('/signup', async(c) => {
 
   const {name, email, password} = body
   
+  const hashedPassword = await bcrypt.hash(password, 10)
+  console.log(hashedPassword);
+  
 
   try{
     const newUser = await prisma.user.create({
       data:{
         email,
         name,
-        password
+        password: hashedPassword
       }      
     })
 
@@ -54,8 +57,7 @@ userRouter.post('/signup', async(c) => {
       id: newUser.id
     }    
     
-    const jwt = await sign(payload,secret);
-    setCookie(c, "jwt", jwt)
+    const jwt = await sign(payload,secret);    
     return c.json({ jwt });
 
   }catch(e){            
@@ -83,7 +85,7 @@ userRouter
   if(!success){
     c.status(411)
     return c.json({
-      error: "Invalid login credentials"
+      error: "Invalid username/password"
     })
   }
 
@@ -108,8 +110,7 @@ userRouter
       })
     }
 
-    const jwt = await sign({user: user.id}, c.env.JWT_SECRET)
-    setCookie(c, "jwt", jwt)
+    const jwt = await sign({user: user.id}, c.env.JWT_SECRET)    
     return c.json({
       jwt 
     })
